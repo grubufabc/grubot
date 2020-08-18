@@ -26,7 +26,7 @@ def link (update, context):
 		context.user_data['link'] = link
 		handles = context.user_data['handles']
 		context.bot.send_message(chat_id = update.effective_chat.id, text = 'Duelo entre ' + handles[0] + 
-																																				' e ' + handles[1] + "!")
+																			' e ' + handles[1] + "!")
 		d = Duel(handles, link)
 		d.start()
 
