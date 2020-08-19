@@ -32,11 +32,12 @@ class CFWatcher:
 			return None
 
 class User:
-	def __init__(self):
+	def __init__(self, handle):
 		self.api = CodeforcesApi()
+		self.handle = handle
 
-	def getUserRating(self, handle):
-		resp = self.api.user_info(handle)
+	def getUserRating(self):
+		resp = self.api.user_info([self.handle])
 		if resp['status']:
 			return resp['result'][0]['rating']
 		else:

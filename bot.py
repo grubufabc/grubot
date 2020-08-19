@@ -44,7 +44,7 @@ def cancel (update, context):
 
 def rating (update, context):
 	handle = context.args[0]
-	user_rating = User().getUserRating([handle])
+	user_rating = User(handle).getUserRating()
 	update.message.reply_text("Toma-lhe rating: " + str(user_rating))
 
 def facts_to_str(user_data):
