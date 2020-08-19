@@ -56,8 +56,6 @@ def getProblemInfo(link):
 	return contId, probId
 
 if __name__ == '__main__':
-	#cf = CFWatcher()
-	#sub = cf.getLastSubmission("jonatas57")
-	#print(sub)
-	print(User().getUserRating(["jonatas57"]))
-
+	cf = CFWatcher()
+	sub = cf.getLastSubmission("jonatas57")
+	print(sub)
