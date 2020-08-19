@@ -31,6 +31,17 @@ class CFWatcher:
 		else:
 			return None
 
+class User:
+	def __init__(self):
+		self.api = CodeforcesApi()
+
+	def getUserRating(self, handle):
+		resp = self.api.user_info(handle)
+		if resp['status']:
+			return resp['result'][0]['rating']
+		else:
+			return None
+
 def getProblemInfo(link):
 	probId = ""
 	contId = 0
@@ -45,6 +56,8 @@ def getProblemInfo(link):
 	return contId, probId
 
 if __name__ == '__main__':
-	cf = CFWatcher()
-	sub = cf.getLastSubmission("jonatas57")
-	print(sub)
+	#cf = CFWatcher()
+	#sub = cf.getLastSubmission("jonatas57")
+	#print(sub)
+	print(User().getUserRating(["jonatas57"]))
+
