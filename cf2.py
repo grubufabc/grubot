@@ -1,4 +1,5 @@
 from codeforces_api import CodeforcesApi
+import json
 
 class CFObject():
 	def __init__(self, obj):
@@ -20,6 +21,7 @@ class Submission(CFObject):
 	def isAccepted(self):
 		return self.verdict == "OK"
 
+
 class CFWatcher:
 	def __init__(self):
 		self.api = CodeforcesApi()
@@ -30,6 +32,14 @@ class CFWatcher:
 			return Submission(resp['result'][0])
 		else:
 			return None
+
+	def getNextContests(self):
+		contests = self.api.contest_list()
+		resp = []
+		for contest in contests['result']:
+			if contest['phase'] == 'BEFORE':
+				resp.append(contest)
+		return resp
 
 class User:
 	def __init__(self, handle):
@@ -56,7 +66,36 @@ def getProblemInfo(link):
 	
 	return contId, probId
 
+def getFormattedTime(seconds):
+	minutes = int(seconds / 60)
+	hours = 0
+	days = 0
+	resp = ""
+
+	while minutes >= 60:
+		hours += 1
+		minutes -= 60
+
+	while hours >= 24:
+		days += 1
+		hours -= 24
+
+	if days > 0:
+		resp += '{}d '.format(days)
+
+	if minutes == 0:
+		resp += '{}h '.format(hours)
+	else:
+		resp += '{}h {}m'.format(hours, minutes)
+
+	return resp
+
 if __name__ == '__main__':
 	cf = CFWatcher()
-	sub = cf.getLastSubmission("jonatas57")
-	print(sub)
+	#sub = cf.getLastSubmission("jonatas57")
+	#print(sub)
+	contests = cf.getNextContests()
+
+	for contest in contests:
+		print(contest['name'])
+		print(Contest().getFormattedTime(contest['durationSeconds']))
